@@ -35,6 +35,7 @@ const Booking = () => {
       numberOfSeats: number;
       seatNumbers: number[];
     }) => {
+      // The apiRequest already includes credentials: 'include' by default
       const response = await apiRequest("POST", "/api/bookings", bookingData);
       return response.json();
     },
@@ -46,7 +47,7 @@ const Booking = () => {
       toast({
         title: "Booking Successful",
         description: "Your tickets have been booked successfully!",
-        variant: "success",
+        variant: "default",
       });
       
       // Redirect to profile page
