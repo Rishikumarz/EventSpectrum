@@ -1,0 +1,107 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: 0 0% 100%;
+  --foreground: 20 14.3% 4.1%;
+  --muted: 60 4.8% 95.9%;
+  --muted-foreground: 25 5.3% 44.7%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 20 14.3% 4.1%;
+  --card: 0 0% 100%;
+  --card-foreground: 20 14.3% 4.1%;
+  --border: 20 5.9% 90%;
+  --input: 20 5.9% 90%;
+  --primary: 357 76% 56%; /* EventSpot red */
+  --primary-foreground: 0 0% 100%;
+  --secondary: 225 24% 24%; /* EventSpot dark blue */
+  --secondary-foreground: 0 0% 100%;
+  --accent: 43 88% 60%; /* EventSpot yellow */
+  --accent-foreground: 24 9.8% 10%;
+  --destructive: 0 84.2% 60.2%;
+  --destructive-foreground: 60 9.1% 97.8%;
+  --ring: 357 76% 56%;
+  --radius: 0.5rem;
+  
+  /* Chart colors */
+  --chart-1: 357 76% 56%;
+  --chart-2: 225 24% 24%;
+  --chart-3: 43 88% 60%;
+  --chart-4: 122 39% 49%;
+  --chart-5: 262 83% 58%;
+  
+  /* Sidebar colors */
+  --sidebar-background: 225 24% 24%;
+  --sidebar-foreground: 0 0% 100%;
+  --sidebar-primary: 357 76% 56%;
+  --sidebar-primary-foreground: 0 0% 100%;
+  --sidebar-accent: 43 88% 60%;
+  --sidebar-accent-foreground: 24 9.8% 10%;
+  --sidebar-border: 220 13% 35%;
+  --sidebar-ring: 357 76% 56%;
+}
+
+.dark {
+  --background: 240 10% 3.9%;
+  --foreground: 0 0% 98%;
+  --muted: 240 3.7% 15.9%;
+  --muted-foreground: 240 5% 64.9%;
+  --popover: 240 10% 3.9%;
+  --popover-foreground: 0 0% 98%;
+  --card: 240 10% 3.9%;
+  --card-foreground: 0 0% 98%;
+  --border: 240 3.7% 15.9%;
+  --input: 240 3.7% 15.9%;
+  --primary: 357 76% 56%;
+  --primary-foreground: 0 0% 100%;
+  --secondary: 225 24% 24%;
+  --secondary-foreground: 0 0% 98%;
+  --accent: 43 88% 60%;
+  --accent-foreground: 0 0% 98%;
+  --destructive: 0 62.8% 30.6%;
+  --destructive-foreground: 0 0% 98%;
+  --ring: 357 76% 56%;
+  --radius: 0.5rem;
+  
+  /* Sidebar colors */
+  --sidebar-background: 225 24% 24%;
+  --sidebar-foreground: 0 0% 100%;
+  --sidebar-primary: 357 76% 56%;
+  --sidebar-primary-foreground: 0 0% 100%;
+  --sidebar-accent: 43 88% 60%;
+  --sidebar-accent-foreground: 24 9.8% 10%;
+  --sidebar-border: 220 13% 35%;
+  --sidebar-ring: 357 76% 56%;
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply font-sans antialiased bg-background text-foreground;
+  }
+  
+  .font-poppins {
+    font-family: 'Poppins', sans-serif;
+  }
+  
+  .font-inter {
+    font-family: 'Inter', sans-serif;
+  }
+  
+  .hero-slide {
+    transition: transform 0.5s ease;
+  }
+  
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+  
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}
