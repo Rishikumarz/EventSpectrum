@@ -1,6 +1,7 @@
-import { pgTable, text, serial, integer, boolean, jsonb, timestamp } from "drizzle-orm/pg-core";
+import { pgTable, text, serial, integer, boolean, jsonb, timestamp, foreignKey } from "drizzle-orm/pg-core";
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
+import { relations } from "drizzle-orm";
 
 // User Model
 export const users = pgTable("users", {
@@ -80,9 +81,9 @@ export const events = pgTable("events", {
   image: text("image").notNull(),
   date: timestamp("date").notNull(),
   price: integer("price").notNull(),
-  venueId: integer("venue_id").notNull(),
-  categoryId: integer("category_id").notNull(),
-  artistId: integer("artist_id"),
+  venueId: integer("venue_id").notNull().references(() => venues.id),
+  categoryId: integer("category_id").notNull().references(() => categories.id),
+  artistId: integer("artist_id").references(() => artists.id),
   isFeatured: boolean("is_featured").default(false),
   isTrending: boolean("is_trending").default(false),
   totalSeats: integer("total_seats").notNull(),
@@ -107,8 +108,8 @@ export const insertEventSchema = createInsertSchema(events).pick({
 // Booking Model
 export const bookings = pgTable("bookings", {
   id: serial("id").primaryKey(),
-  userId: integer("user_id").notNull(),
-  eventId: integer("event_id").notNull(),
+  userId: integer("user_id").notNull().references(() => users.id),
+  eventId: integer("event_id").notNull().references(() => events.id),
   bookingDate: timestamp("booking_date").defaultNow().notNull(),
   numberOfSeats: integer("number_of_seats").notNull(),
   totalAmount: integer("total_amount").notNull(),
@@ -123,6 +124,50 @@ export const insertBookingSchema = createInsertSchema(bookings).pick({
   totalAmount: true,
   seatNumbers: true,
 });
+
+// Relations
+export const usersRelations = relations(users, ({ many }) => ({
+  bookings: many(bookings),
+}));
+
+export const categoriesRelations = relations(categories, ({ many }) => ({
+  events: many(events),
+}));
+
+export const venuesRelations = relations(venues, ({ many }) => ({
+  events: many(events),
+}));
+
+export const artistsRelations = relations(artists, ({ many }) => ({
+  events: many(events),
+}));
+
+export const eventsRelations = relations(events, ({ one, many }) => ({
+  venue: one(venues, {
+    fields: [events.venueId],
+    references: [venues.id],
+  }),
+  category: one(categories, {
+    fields: [events.categoryId],
+    references: [categories.id],
+  }),
+  artist: one(artists, {
+    fields: [events.artistId],
+    references: [artists.id],
+  }),
+  bookings: many(bookings),
+}));
+
+export const bookingsRelations = relations(bookings, ({ one }) => ({
+  user: one(users, {
+    fields: [bookings.userId],
+    references: [users.id],
+  }),
+  event: one(events, {
+    fields: [bookings.eventId],
+    references: [events.id],
+  }),
+}));
 
 // Exported Types
 export type User = typeof users.$inferSelect;
